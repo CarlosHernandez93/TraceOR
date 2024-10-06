@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1097228583679",
+    "project_id": "traceor-b91f7",
+    "storage_bucket": "traceor-b91f7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1097228583679:android:29e3e70c280480961282ca",
+        "android_client_info": {
+          "package_name": "com.example.trace_or"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhu0CkBjNUwEB_1IzdNE0W3u5Rhr1H8Ig"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
