@@ -8,6 +8,7 @@ abstract class AuthEvent extends Equatable {
 }
 
 class AuthRegister extends AuthEvent {
+  final String fullName;
   final String email;
   final String password;
   final String role;
@@ -15,6 +16,7 @@ class AuthRegister extends AuthEvent {
   final String documentNumber;
 
   const AuthRegister({
+    required this.fullName,
     required this.email,
     required this.password,
     required this.role,
@@ -37,3 +39,14 @@ class AuthLogin extends AuthEvent {
 }
 
 class AuthLogout extends AuthEvent {}
+
+class AppStarted extends AuthEvent {}
+
+class AuthPasswordResetRequested extends AuthEvent {
+  final String email;
+
+  const AuthPasswordResetRequested({required this.email});
+
+  @override
+  List<Object> get props => [email];
+}

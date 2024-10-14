@@ -9,6 +9,7 @@ class AuthRepository {
   AuthRepository(this._firebaseAuth, this._firestore);
 
   Future<UserModel> register({
+    required fullName,
     required String email,
     required String password,
     required String role,
@@ -24,7 +25,8 @@ class AuthRepository {
 
     if (firebaseUser != null) {
       // Guardar datos adicionales en Firestore
-      await _firestore.collection('users').doc(firebaseUser.uid).set({
+      await _firestore.collection('Users').doc(firebaseUser.uid).set({
+        'fullName': fullName,
         'email': email,
         'role': role,
         'documentType': documentType,
@@ -33,6 +35,7 @@ class AuthRepository {
 
       return UserModel(
         id: firebaseUser.uid,
+        fullName: fullName,
         email: email,
         role: role,
         documentType: documentType,
@@ -47,6 +50,7 @@ class AuthRepository {
     required String email,
     required String password,
   }) async {
+
     UserCredential userCredential = await _firebaseAuth.signInWithEmailAndPassword(
       email: email,
       password: password,
@@ -55,12 +59,13 @@ class AuthRepository {
     User? firebaseUser = userCredential.user;
 
     if (firebaseUser != null) {
-      DocumentSnapshot doc = await _firestore.collection('users').doc(firebaseUser.uid).get();
+      DocumentSnapshot doc = await _firestore.collection('Users').doc(firebaseUser.uid).get();
       Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
 
       if (data != null) {
         return UserModel(
           id: firebaseUser.uid,
+          fullName: data['fullName'],
           email: data['email'],
           role: data['role'],
           documentType: data['documentType'],
@@ -76,5 +81,21 @@ class AuthRepository {
 
   Future<void> logout() async {
     await _firebaseAuth.signOut();
+  }
+
+  User? getCurrentUser() {
+    return _firebaseAuth.currentUser; // Devuelve el usuario actual o null si no hay ninguno
+  }
+
+
+  Future<void> sendPasswordResetEmail(String email) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        throw Exception('No existe un usuario con ese correo electrónico.');
+      }
+      throw Exception('Error al enviar el correo de recuperación.');
+    }
   }
 }

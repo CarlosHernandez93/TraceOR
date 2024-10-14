@@ -1,4 +1,4 @@
-import 'package:trace_or/config/repository/auth_repository.dart';
+import 'package:trace_or/config/repository/repositories.dart';
 import 'package:trace_or/config/router/app_router.dart';
 import 'package:trace_or/presentation/blocs/auth/auth_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
