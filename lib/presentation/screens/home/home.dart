@@ -1,13 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:trace_or/config/router/app_router.dart';
+import 'package:trace_or/config/theme/app_colors.dart';
 import 'package:trace_or/config/theme/curve_painter_long.dart';
 import 'package:trace_or/config/theme/curve_painter_short.dart';
 import 'package:trace_or/config/utils/image_references.dart';
 import 'package:trace_or/presentation/blocs/auth/auth_bloc.dart';
 import 'package:trace_or/presentation/blocs/auth/auth_event.dart';
 import 'package:trace_or/presentation/blocs/auth/auth_state.dart';
+import 'package:trace_or/widgets/custom_elevated_button.dart';
+import 'package:trace_or/widgets/custom_list_field.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -18,8 +22,54 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  String? _selectedPacient;
+  String? _selectedOR;
+
+  List<String> _pacientItems = [];
+  List<String> _orItems = [];
+  bool _isLoadingPacient = true;
+  bool _isLoadingOR = true;
+
+  void _loadPacientItems() {
+    FirebaseFirestore.instance
+        .collection('Constants')
+        .doc('Pacient')
+        .snapshots()
+        .listen((snapshot) {
+      setState(() {
+        if (snapshot.exists) {
+          _pacientItems = List<String>.from(snapshot.data()?['items'] ?? []);
+          _isLoadingPacient = false;
+        } else {
+          _pacientItems = [];
+        }
+      });
+    });
+  }
+
+  void _loadORItems() {
+    FirebaseFirestore.instance
+        .collection('Constants')
+        .doc('OR')
+        .snapshots()
+        .listen((snapshot) {
+      setState(() {
+        if (snapshot.exists) {
+          _orItems = List<String>.from(snapshot.data()?['items'] ?? []);
+          _isLoadingOR = false;
+        } else {
+          _orItems = [];
+        }
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadPacientItems();
+    _loadORItems();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,12 +132,96 @@ class _HomeState extends State<Home> {
                       )
                     ],
                   ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          margin: EdgeInsets.only(top: (heightApp * 0.03)),
+                          padding: const EdgeInsets.only(left: 16, right: 16),
+                          child: Column(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(bottom: (heightApp * 0.03)),
+                                child: const Text(
+                                  'Quirofanos disponibles:',
+                                  style: TextStyle(
+                                    color: AppColors.colorFive,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 22
+                                  ),
+                                ),
+                              ),
+                              CustomListField(
+                                items:  _orItems, 
+                                onChanged: (value){
+                                  _selectedOR = value;
+                                }
+                              ),
+                              const SizedBox(height: 15),
+                              CustomElevatedButton(
+                                text: "Añadir paciente",
+                                color: AppColors.colorSix,
+                                icon: Icons.add,
+                                onPressed: (){
+
+                                }
+                              ),
+                              const SizedBox(height: 30),
+                              Container(
+                                margin: EdgeInsets.only(bottom: (heightApp * 0.03)),
+                                child: const Text(
+                                  'Lista de pacientes:',
+                                  style: TextStyle(
+                                    color: AppColors.colorFive,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 22
+                                  ),
+                                ),
+                              ),
+                              CustomListField(
+                                items: _pacientItems, 
+                                onChanged: (value){
+                                  _selectedPacient = value;
+                                }
+                              ),
+                              const SizedBox(height: 15),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: CustomElevatedButton(
+                                      text: "Configurar",
+                                      color: AppColors.colorSix,
+                                      icon: Icons.settings,
+                                      onPressed: (){
+
+                                      }
+                                    )
+                                  ),
+                                  const SizedBox(width: 15),
+                                  Expanded(
+                                    child: CustomElevatedButton(
+                                      text: "Observar",
+                                      color: AppColors.colorSix,
+                                      icon: Icons.visibility,
+                                      onPressed: (){
+
+                                      }
+                                    ),
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                        )
+                      )
+                    ]
+                  )
                 ]
               )
             ],
           )
         ) 
-      ),
+      )
     );
   }
 }

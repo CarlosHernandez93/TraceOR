@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:go_router/go_router.dart';
 import 'package:trace_or/presentation/screens/screens.dart';
+
+final firestore = FirebaseFirestore.instance;
 
 final appRouter = GoRouter(
   routes: [
@@ -17,6 +20,10 @@ final appRouter = GoRouter(
     ),
     GoRoute(
       path: '/home',
+      builder: (context, state) => const Home()
+    ),
+    GoRoute(
+      path: '/registerPatient',
       builder: (context, state) => const Home()
     ),
     GoRoute(

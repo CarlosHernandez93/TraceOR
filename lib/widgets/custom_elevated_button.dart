@@ -5,13 +5,15 @@ class CustomElevatedButton extends StatelessWidget {
   final VoidCallback onPressed;
   final Color color;
   final Color textColor;
+  final IconData? icon;
 
   const CustomElevatedButton({
     super.key,
     required this.text,
     required this.onPressed,
-    this.color = Colors.blue, // Color del botón por defecto
-    this.textColor = Colors.white, // Color del texto por defecto
+    this.color = Colors.blue,
+    this.textColor = Colors.white,
+    this.icon
   });
 
   @override
@@ -19,19 +21,33 @@ class CustomElevatedButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: color, // Color de fondo del botón // Color del texto
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12), // Padding del botón
+        backgroundColor: color,
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15), // Bordes redondeados
+          borderRadius: BorderRadius.circular(15),
         ),
       ),
-      child: Text(
-        text,
-        style: TextStyle(
-          color: textColor,
-          fontSize: 16, 
-          fontWeight: FontWeight.bold), // Estilo del texto
-      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (icon != null) ...[
+            Icon(
+              icon, 
+              size: 20,
+              color: textColor,
+            ),
+            const SizedBox(width: 8), // Espacio entre el ícono y el texto
+          ],
+          Text(
+            text,
+            style: TextStyle(
+              color: textColor,
+              fontSize: 16, 
+              fontWeight: FontWeight.bold)
+          ),
+        ],
+      )
+      
     );
   }
 }
