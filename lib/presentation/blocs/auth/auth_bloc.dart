@@ -7,7 +7,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository authRepository;
 
   AuthBloc({required this.authRepository}) : super(AuthInitial()) {
-    on<AuthRegister>(regiser);
+    on<AuthRegister>(register);
     on<AuthLogin>(login);
     on<AuthLogout>(logOut);
     on<AppStarted>(appStarted);
@@ -15,7 +15,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
 
-  void regiser (event, emit) async {
+  void register (event, emit) async {
     emit(AuthLoading());
     try {
       final user = await authRepository.register(

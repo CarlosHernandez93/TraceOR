@@ -10,6 +10,9 @@ import 'package:trace_or/config/utils/image_references.dart';
 import 'package:trace_or/presentation/blocs/auth/auth_bloc.dart';
 import 'package:trace_or/presentation/blocs/auth/auth_event.dart';
 import 'package:trace_or/presentation/blocs/auth/auth_state.dart';
+import 'package:trace_or/presentation/blocs/patientProcedure/patient_procedure_bloc.dart';
+import 'package:trace_or/presentation/blocs/patientProcedure/patient_procedure_event.dart';
+import 'package:trace_or/presentation/blocs/patientProcedure/patient_procedure_state.dart';
 import 'package:trace_or/widgets/custom_elevated_button.dart';
 import 'package:trace_or/widgets/custom_list_field.dart';
 
@@ -22,10 +25,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
-  String? _selectedPacient;
-  String? _selectedOR;
-
-  List<String> _pacientItems = [];
+  List<String> _patientItems = [];
   List<String> _orItems = [];
   bool _isLoadingPacient = true;
   bool _isLoadingOR = true;
@@ -38,10 +38,10 @@ class _HomeState extends State<Home> {
         .listen((snapshot) {
       setState(() {
         if (snapshot.exists) {
-          _pacientItems = List<String>.from(snapshot.data()?['items'] ?? []);
+          _patientItems = List<String>.from(snapshot.data()?['items'] ?? []);
           _isLoadingPacient = false;
         } else {
-          _pacientItems = [];
+          _patientItems = [];
         }
       });
     });
@@ -151,10 +151,14 @@ class _HomeState extends State<Home> {
                                   ),
                                 ),
                               ),
-                              CustomListField(
-                                items:  _orItems, 
-                                onChanged: (value){
-                                  _selectedOR = value;
+                              BlocBuilder<PatientProcedureBloc, PatientProcedureState>(
+                                builder: (context, state){
+                                  return CustomListField(
+                                    items:  _orItems, 
+                                    onChanged: (value){
+                                      context.read<PatientProcedureBloc>().add(UpdateOperatingRoomValue(value: value!));
+                                    }
+                                  );
                                 }
                               ),
                               const SizedBox(height: 15),
@@ -178,10 +182,14 @@ class _HomeState extends State<Home> {
                                   ),
                                 ),
                               ),
-                              CustomListField(
-                                items: _pacientItems, 
-                                onChanged: (value){
-                                  _selectedPacient = value;
+                              BlocBuilder<PatientProcedureBloc, PatientProcedureState>(
+                                builder: (context, state){
+                                  return CustomListField(
+                                    items:  _patientItems, 
+                                    onChanged: (value){
+                                      context.read<PatientProcedureBloc>().add(UpdateOperatingRoomValue(value: value!));
+                                    }
+                                  );
                                 }
                               ),
                               const SizedBox(height: 15),
