@@ -22,4 +22,14 @@ class ConstanstRepository {
 
     return List<String>.from(snapshot['documents']);
   }
+
+    // Obtener la lista de documentos definidos en el documento
+  static Future<List<String>> getNameOperatingRooms() async {
+    DocumentSnapshot snapshot = await _firestore
+        .collection('Constants')
+        .doc('OR')
+        .get();
+
+    return List<String>.from(snapshot['items']);
+  }
 }

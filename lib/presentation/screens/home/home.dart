@@ -27,8 +27,6 @@ class _HomeState extends State<Home> {
 
   List<String> _patientItems = [];
   List<String> _orItems = [];
-  bool _isLoadingPacient = true;
-  bool _isLoadingOR = true;
 
   void _loadPacientItems() {
     FirebaseFirestore.instance
@@ -39,7 +37,6 @@ class _HomeState extends State<Home> {
       setState(() {
         if (snapshot.exists) {
           _patientItems = List<String>.from(snapshot.data()?['items'] ?? []);
-          _isLoadingPacient = false;
         } else {
           _patientItems = [];
         }
@@ -56,7 +53,6 @@ class _HomeState extends State<Home> {
       setState(() {
         if (snapshot.exists) {
           _orItems = List<String>.from(snapshot.data()?['items'] ?? []);
-          _isLoadingOR = false;
         } else {
           _orItems = [];
         }
@@ -167,7 +163,7 @@ class _HomeState extends State<Home> {
                                 color: AppColors.colorSix,
                                 icon: Icons.add,
                                 onPressed: (){
-
+                                  appRouter.push('/home/registerPatient');
                                 }
                               ),
                               const SizedBox(height: 30),

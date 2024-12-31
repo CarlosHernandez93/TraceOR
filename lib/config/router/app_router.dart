@@ -30,8 +30,8 @@ final appRouter = GoRouter(
       },
       routes: [
         GoRoute(
-          path: '/registerPatient',
-          builder: (context, state) => const Home()
+          path: 'registerPatient',
+          builder: (context, state) => const RegisterPatient()
         ),
       ]
     ),

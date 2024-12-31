@@ -27,7 +27,7 @@ class LoginState extends State<Login> {
   TextEditingController passwordController = TextEditingController();
 
   void navigationPage() {
-    appRouter.go('/register');
+    appRouter.push('/register');
   }
 
   void loginValidation(){
@@ -119,74 +119,76 @@ class LoginState extends State<Login> {
                         )
                       ],
                     ),
-                    Row(children: <Widget>[
-                      Expanded(
-                        child: Container(
-                          margin: EdgeInsets.only(top: (heightApp * 0.03)),
-                          padding: const EdgeInsets.only(left: 16, right: 16),
-                          child: Card(
-                            color: AppColors.colorFive,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.0),
-                            ),
-                            elevation: 10.0,
-                            child: Padding(
-                              padding: EdgeInsets.only(top: (heightApp * 0.03), bottom: (heightApp * 0.03)),
-                              child: Form(
-                                child: Column(children: <Widget>[
-                                  Container(
-                                    margin: EdgeInsets.only(bottom: (heightApp * 0.035)),
-                                    width: widthApp * 0.75,
-                                    child: CustomTextField(
-                                      hintText: "Correo electronico",
-                                      controller: emailController,
-                                      keyboardType: TextInputType.emailAddress,
-                                      icon: Icons.person_outline,
-                                    ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(bottom: (heightApp * 0.045)),
-                                    width: widthApp * 0.75,
-                                    child: CustomPasswordField(
-                                      hintText: "Contraseña",
-                                      controller: passwordController
-                                    ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(bottom: (heightApp * 0.02)),
-                                    width: widthApp * 0.75,
-                                    child: CustomElevatedButton(
-                                      text: "Iniciar Sesion",
-                                      color: AppColors.colorSix,
-                                      onPressed:(){
-                                        loginValidation();
-                                      } ,
-                                    ),
-                                  ),
-                                  Container(
-                                    margin: const EdgeInsets.only(bottom: 0),
-                                    width: widthApp * 0.75,
-                                    child: TextButton(
-                                      onPressed: (){
-                                        appRouter.go('/forgotPassword');
-                                      }, 
-                                      child: const Text(
-                                        'Olvidaste tu contraseña',
-                                        style: TextStyle(
-                                          fontFamily: "OpenSans",
-                                          color: Color.fromARGB(255, 108, 108, 108),
-                                          fontWeight: FontWeight.w500
-                                        )
-                                      )
-                                    ),
-                                  )
-                                ]),
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Container(
+                            margin: EdgeInsets.only(top: (heightApp * 0.03)),
+                            padding: const EdgeInsets.only(left: 16, right: 16),
+                            child: Card(
+                              color: AppColors.colorFive,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12.0),
                               ),
-                            ) 
+                              elevation: 10.0,
+                              child: Padding(
+                                padding: EdgeInsets.only(top: (heightApp * 0.03), bottom: (heightApp * 0.03)),
+                                child: Form(
+                                  child: Column(children: <Widget>[
+                                    Container(
+                                      margin: EdgeInsets.only(bottom: (heightApp * 0.035)),
+                                      width: widthApp * 0.75,
+                                      child: CustomTextField(
+                                        hintText: "Correo electronico",
+                                        controller: emailController,
+                                        keyboardType: TextInputType.emailAddress,
+                                        icon: Icons.person_outline,
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.only(bottom: (heightApp * 0.045)),
+                                      width: widthApp * 0.75,
+                                      child: CustomPasswordField(
+                                        hintText: "Contraseña",
+                                        controller: passwordController
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.only(bottom: (heightApp * 0.02)),
+                                      width: widthApp * 0.75,
+                                      child: CustomElevatedButton(
+                                        text: "Iniciar Sesion",
+                                        color: AppColors.colorSix,
+                                        onPressed:(){
+                                          loginValidation();
+                                        } ,
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: const EdgeInsets.only(bottom: 0),
+                                      width: widthApp * 0.75,
+                                      child: TextButton(
+                                        onPressed: (){
+                                          appRouter.push('/forgotPassword');
+                                        }, 
+                                        child: const Text(
+                                          'Olvidaste tu contraseña',
+                                          style: TextStyle(
+                                            fontFamily: "OpenSans",
+                                            color: Color.fromARGB(255, 108, 108, 108),
+                                            fontWeight: FontWeight.w500
+                                          )
+                                        )
+                                      ),
+                                    )
+                                  ]),
+                                ),
+                              ) 
+                            ),
                           ),
                         ),
-                      ),
-                    ]),
+                      ]
+                    ),
                     Row(
                       children: <Widget>[
                         Expanded(

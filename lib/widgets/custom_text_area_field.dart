@@ -1,32 +1,30 @@
-import 'package:trace_or/config/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:trace_or/config/theme/app_colors.dart';
 
-class CustomTextField extends StatelessWidget {
+class CustomTextAreaField extends StatelessWidget {
   final String hintText;
   final TextEditingController controller;
-  final TextInputType keyboardType;
-  final bool obscureText;
+  final int maxLines;
   final IconData? icon;
   final String? Function(String?)? validator;
-  final bool? enabled;
+  final bool isReadOnly;
 
-  const CustomTextField({
+  const CustomTextAreaField({
     super.key,
     required this.hintText,
     required this.controller,
-    this.keyboardType = TextInputType.text,
-    this.obscureText = false,
+    this.maxLines = 5,
     this.icon,
     this.validator,
-    this.enabled
+    this.isReadOnly = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
-      keyboardType: keyboardType,
-      obscureText: obscureText,
+      maxLines: maxLines,
+      readOnly: isReadOnly,
       decoration: InputDecoration(
         prefixIcon: icon != null ? Icon(icon) : null,
         hintText: hintText,
@@ -40,19 +38,19 @@ class CustomTextField extends StatelessWidget {
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
-          borderSide: BorderSide.none
+          borderSide: BorderSide.none,
         ),
         labelStyle: const TextStyle(
           color: Color(0xFF000000),
           fontFamily: "OpenSans",
         ),
         hintStyle: const TextStyle(
-          fontFamily: "OpenSans", color: Color.fromARGB(255, 108, 108, 108)
+          fontFamily: "OpenSans",
+          color: Color.fromARGB(255, 108, 108, 108),
         ),
         filled: true,
         fillColor: const Color.fromARGB(255, 238, 238, 238),
         contentPadding: const EdgeInsets.all(15.0),
-        enabled: enabled ?? true
       ),
       validator: validator,
     );
