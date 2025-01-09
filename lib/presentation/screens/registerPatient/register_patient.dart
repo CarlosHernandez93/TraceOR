@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:toastification/toastification.dart';
 import 'package:trace_or/config/repository/constants/constants_repository.dart';
 import 'package:trace_or/config/repository/patientProcedure/patient_procedure_repository.dart';
@@ -9,7 +8,6 @@ import 'package:trace_or/config/router/app_router.dart';
 import 'package:trace_or/config/theme/app_colors.dart';
 import 'package:trace_or/config/theme/curve_painter_long.dart';
 import 'package:trace_or/config/theme/curve_painter_short.dart';
-import 'package:trace_or/config/utils/image_references.dart';
 import 'package:trace_or/presentation/blocs/auth/auth_bloc.dart';
 import 'package:trace_or/presentation/blocs/auth/auth_event.dart';
 import 'package:trace_or/presentation/blocs/auth/auth_state.dart';
@@ -43,7 +41,7 @@ class _RegisterPatientState extends State<RegisterPatient> {
   String typeDocument = '';
   String nameOperatingRooms = '';
 
- Future<void> searchDocument() async {
+  Future<void> searchDocument() async {
     setState(() {
       isSearching = true;
       isLoading = true;
@@ -348,7 +346,7 @@ class _RegisterPatientState extends State<RegisterPatient> {
     });
   }
 
-    @override
+  @override
   void initState() {
     super.initState();
     _loadData();
@@ -403,24 +401,10 @@ class _RegisterPatientState extends State<RegisterPatient> {
               Column(
                 children: [
                   Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Center(
-                          child: Container(
-                            margin: EdgeInsets.only(top: (heightApp * 0.08)),
-                            alignment: Alignment.topCenter,
-                            height: 160,
-                            child: SvgPicture.asset(ImagesReferences.logo),
-                          ),
-                        )
-                      )
-                    ],
-                  ),
-                  Row(
                     children: [
                       Expanded(
                         child: Container(
-                          margin: EdgeInsets.only(top: (heightApp * 0.03)),
+                          margin: EdgeInsets.only(top: (heightApp * 0.15)),
                           padding: const EdgeInsets.only(left: 16, right: 16),
                           child: Card(
                             color: AppColors.colorFive,

@@ -22,17 +22,16 @@ final appRouter = GoRouter(
     ),
     GoRoute(
       path: '/home',
-      builder: (context, state) {
-        return BlocProvider(
-          create: (_) => PatientProcedureBloc(),
-          child: const Home(),
-        );
-      },
+      builder: (context, state) => const Home(),
       routes: [
         GoRoute(
           path: 'registerPatient',
           builder: (context, state) => const RegisterPatient()
         ),
+        GoRoute(
+          path: 'registerListProcedure',
+          builder: (context, state) => const RegisterListProcedure()
+        )
       ]
     ),
     GoRoute(

@@ -4,19 +4,17 @@ import 'package:trace_or/presentation/blocs/patientProcedure/patient_procedure_s
 
 class PatientProcedureBloc extends Bloc<PatientProcedureEvent, PatientProcedureState> {
 
-  PatientProcedureBloc() : super(PatientProcedureInitial()){
+  PatientProcedureBloc() : super(const PatientProcedureState()){
     on<UpdateOperatingRoomValue>(saveOperatingRoomValue);
     on<UpdatePatientValue>(savePatientValue);
   }
 
 
   void saveOperatingRoomValue(event, emit) {
-    final operatingRoom = event.value;
-    emit(OperatingRoomValue(operatingRoom));
+    emit(state.copyWith(operatingRoomValue: event.value));
   }
 
   void savePatientValue(event, emit) {
-    final patient = event.value;
-    emit(PatientValue(patient));
+    emit(state.copyWith(patientValue: event.value));
   }
 }

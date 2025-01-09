@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class CustomListField extends StatefulWidget {
   final List<dynamic> items;
   final String hintText;
-  final ValueChanged<String?> onChanged;
-  final String? initialValue;
+  final ValueChanged<dynamic> onChanged;
+  final dynamic initialValue;
 
   const CustomListField({
     super.key,
@@ -20,7 +20,7 @@ class CustomListField extends StatefulWidget {
 
 class _CustomListFieldState extends State<CustomListField> {
 
-  String? selectedValue;
+  dynamic selectedValue;
 
   @override
   void initState() {
@@ -39,7 +39,7 @@ class _CustomListFieldState extends State<CustomListField> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
         child: DropdownButtonHideUnderline(
-          child: DropdownButton<String>(
+          child: DropdownButton<dynamic>(
             value: selectedValue,
             hint: Text(
               widget.hintText,
@@ -57,12 +57,20 @@ class _CustomListFieldState extends State<CustomListField> {
               fontSize: 16,
             ),
             items: widget.items.map((dynamic item) {
-              return DropdownMenuItem<String>(
-                value: item,
-                child: Text(item),
-              );
+              if(item is String) {
+                return DropdownMenuItem<String>(
+                  value: item,
+                  child: Text(item),
+                );
+              }
+              else {
+                return DropdownMenuItem<dynamic>(
+                  value: item['id'],
+                  child: Text(item['name']),
+                );
+              }
             }).toList(),
-            onChanged: (String? newValue) {
+            onChanged: (dynamic newValue) {
               setState(() {
                 selectedValue = newValue;
               });

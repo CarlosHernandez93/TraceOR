@@ -22,6 +22,7 @@ dependencies:
   loading_animation_widget: ^1.3.0
   shared_preferences: ^2.3.2
   flutter_localization: ^0.2.3
+  lottie: 3.2.0
   flutter_localizations:
     sdk: flutter
 
@@ -40,3 +41,4 @@ flutter:
     - assets/logo.png
     - assets/medical-college-logo.svg
     - assets/checklist.svg
+    - assets/animation-search.json

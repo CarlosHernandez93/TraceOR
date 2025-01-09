@@ -1,28 +1,25 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
-abstract class PatientProcedureState extends Equatable {
-  const PatientProcedureState();
+class PatientProcedureState extends Equatable {
+  final String? operatingRoomValue;
+  final DocumentReference? patientValue;
+
+  const PatientProcedureState({
+    this.operatingRoomValue,
+    this.patientValue,
+  });
+
+  PatientProcedureState copyWith({
+    String? operatingRoomValue,
+    DocumentReference? patientValue,
+  }){
+    return PatientProcedureState(
+      operatingRoomValue: operatingRoomValue ?? this.operatingRoomValue,
+      patientValue: patientValue ?? this.patientValue,
+    );
+  }
 
   @override
-  List<Object> get props => [];
-}
-
-class PatientProcedureInitial extends PatientProcedureState {}
-
-class OperatingRoomValue extends PatientProcedureState {
-  final String value;
-
-  const OperatingRoomValue(this.value);
-
-  @override
-  List<Object> get props => [value];
-}
-
-class PatientValue extends PatientProcedureState {
-  final String value;
-
-  const PatientValue(this.value);
-
-  @override
-  List<Object> get props => [value];
+  List<Object?> get props => [operatingRoomValue, patientValue];
 }

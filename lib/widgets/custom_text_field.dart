@@ -8,6 +8,7 @@ class CustomTextField extends StatelessWidget {
   final bool obscureText;
   final IconData? icon;
   final String? Function(String?)? validator;
+  final void Function(String)? onChanged;
   final bool? enabled;
 
   const CustomTextField({
@@ -18,6 +19,7 @@ class CustomTextField extends StatelessWidget {
     this.obscureText = false,
     this.icon,
     this.validator,
+    this.onChanged,
     this.enabled
   });
 
@@ -55,6 +57,7 @@ class CustomTextField extends StatelessWidget {
         enabled: enabled ?? true
       ),
       validator: validator,
+      onChanged: onChanged,
     );
   }
 }

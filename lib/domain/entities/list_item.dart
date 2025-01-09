@@ -1,6 +1,6 @@
 class ListItem{
-  final String title;
-  final bool check;
+  String title;
+  bool check;
   
   ListItem(this.title,this.check);
 }

@@ -23,11 +23,21 @@ class ConstanstRepository {
     return List<String>.from(snapshot['documents']);
   }
 
-    // Obtener la lista de documentos definidos en el documento
+  // Obtener la lista de documentos definidos en el documento
   static Future<List<String>> getNameOperatingRooms() async {
     DocumentSnapshot snapshot = await _firestore
         .collection('Constants')
         .doc('OR')
+        .get();
+
+    return List<String>.from(snapshot['items']);
+  }
+
+  // Obtener la lista de tareas del procedimiento quirurgico
+  static Future<List<String>> stepsListProcedure() async {
+    DocumentSnapshot snapshot = await _firestore
+        .collection('Constants')
+        .doc('StepsListProcedure')
         .get();
 
     return List<String>.from(snapshot['items']);

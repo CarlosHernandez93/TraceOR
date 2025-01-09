@@ -1,8 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class PatientProcedureEvent extends Equatable {
-  const PatientProcedureEvent();
-
+ 
   @override
   List<Object> get props => [];
 }
@@ -10,16 +10,16 @@ abstract class PatientProcedureEvent extends Equatable {
 class UpdateOperatingRoomValue extends PatientProcedureEvent {
   final String value;
 
-  const UpdateOperatingRoomValue({required this.value});
+  UpdateOperatingRoomValue(this.value);
 
   @override
   List<Object> get props => [value];
 }
 
 class UpdatePatientValue extends PatientProcedureEvent {
-  final String value;
+  final DocumentReference value;
 
-  const UpdatePatientValue({required this.value});
+  UpdatePatientValue(this.value);
 
   @override
   List<Object> get props => [value];
