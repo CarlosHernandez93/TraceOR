@@ -148,7 +148,7 @@ class _HomeState extends State<Home> {
       return;
     }
 
-    //appRouter.push('/home/procedure');
+    appRouter.push('/home/viewProcedure');
   }
 
   @override
