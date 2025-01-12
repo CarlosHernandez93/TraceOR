@@ -1,5 +1,6 @@
 import 'package:trace_or/config/repository/repositories.dart';
 import 'package:trace_or/config/router/app_router.dart';
+import 'package:trace_or/local_notification_service.dart';
 import 'package:trace_or/presentation/blocs/auth/auth_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,6 +18,7 @@ void main() async {
     name: "TraceOR",
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await LocalNotificationService().initialize();
   runApp(const MyApp());
 }
 
