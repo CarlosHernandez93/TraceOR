@@ -1,3 +1,4 @@
+import 'package:trace_or/background_service.dart';
 import 'package:trace_or/config/repository/repositories.dart';
 import 'package:trace_or/config/router/app_router.dart';
 import 'package:trace_or/local_notification_service.dart';
@@ -19,6 +20,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await LocalNotificationService().initialize();
+  await initializeService();
   runApp(const MyApp());
 }
 

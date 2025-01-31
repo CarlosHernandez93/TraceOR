@@ -4,6 +4,9 @@
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:label="trace_or"
         android:name="${applicationName}"
@@ -54,6 +57,10 @@
             android:stopWithTask="false"
             android:foregroundServiceType="dataSync">
         </service>
+        <service 
+            android:name="com.pravera.flutter_foreground_task.service.ForegroundService"
+            android:permission="android.permission.FOREGROUND_SERVICE"
+            android:exported="true" />
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and

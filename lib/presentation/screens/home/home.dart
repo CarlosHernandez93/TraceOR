@@ -8,7 +8,6 @@ import 'package:trace_or/config/theme/app_colors.dart';
 import 'package:trace_or/config/theme/curve_painter_long.dart';
 import 'package:trace_or/config/theme/curve_painter_short.dart';
 import 'package:trace_or/config/utils/image_references.dart';
-import 'package:trace_or/local_notification_service.dart';
 import 'package:trace_or/presentation/blocs/auth/auth_bloc.dart';
 import 'package:trace_or/presentation/blocs/auth/auth_event.dart';
 import 'package:trace_or/presentation/blocs/auth/auth_state.dart';

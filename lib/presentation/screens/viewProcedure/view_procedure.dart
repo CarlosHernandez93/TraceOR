@@ -1,18 +1,21 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:trace_or/config/router/app_router.dart';
 import 'package:trace_or/config/theme/app_colors.dart';
 import 'package:trace_or/config/theme/curve_painter_long.dart';
 import 'package:trace_or/config/theme/curve_painter_short.dart';
 import 'package:trace_or/config/utils/image_references.dart';
+import 'package:trace_or/local_notification_service.dart';
 import 'package:trace_or/presentation/blocs/auth/auth_bloc.dart';
 import 'package:trace_or/presentation/blocs/auth/auth_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trace_or/presentation/blocs/auth/auth_state.dart';
 import 'package:trace_or/presentation/blocs/patientProcedure/patient_procedure_bloc.dart';
 import 'package:trace_or/widgets/custom_elevated_button.dart';
+import 'package:trace_or/widgets/custom_text_button.dart';
 
 class ViewProcedure extends StatefulWidget {
   const ViewProcedure({super.key});
@@ -25,6 +28,7 @@ class _ViewProcedureState extends State<ViewProcedure> {
   final StreamController<dynamic> streamController = StreamController<dynamic>();
   List<dynamic> listProcedure = [];
   int indexItem = 0;
+  bool isFollow = false;
 
   void loadData() {
     context.read<PatientProcedureBloc>().state.patientValue?.snapshots().listen((snapshot){
@@ -82,6 +86,21 @@ class _ViewProcedureState extends State<ViewProcedure> {
         );
       }
     );
+  }
+
+  void startBackgroundTask (Map<String, dynamic> stepProcedure, int indexItem) async {
+    final service = FlutterBackgroundService();
+    bool isRunning = await service.isRunning();
+    if (!isRunning) {
+      service.startService();
+      print("Servicio iniciado");
+    }
+  }
+
+  void finishBackgroundTask () async {
+    final service = FlutterBackgroundService();
+    service.invoke("stopService");
+    print("Servicio detenido");
   }
 
   @override
@@ -200,7 +219,7 @@ class _ViewProcedureState extends State<ViewProcedure> {
                                 });
                                 return const Text("");
                               }
-
+                              //LocalNotificationService().showInstantNotification();
                               indexItem = listProcedure.indexWhere((item) => item['active'] == true);
                               Map<String, dynamic> itemProcedure = listProcedure[indexItem];
                               return Column(
@@ -231,6 +250,48 @@ class _ViewProcedureState extends State<ViewProcedure> {
                                     color: AppColors.colorSix,
                                     onPressed: nextStep        
                                   ),
+                                  // CustomElevatedButton(
+                                  //   text: "Iniciar",
+                                  //   color: AppColors.colorSix,
+                                  //   onPressed: () async {
+                                  //     final service = FlutterBackgroundService();
+                                  //     bool isRunning = await service.isRunning();
+                                  //     if (!isRunning) {
+                                  //       service.startService();
+                                  //       print("Servicio iniciado");
+                                  //     }
+                                  //   }       
+                                  // ),
+                                  // CustomElevatedButton(
+                                  //   text: "Finalizar",
+                                  //   color: AppColors.colorSix,
+                                  //   onPressed: () async {
+                                  //     final service = FlutterBackgroundService();
+                                  //     service.invoke("stopService");
+                                  //     print("Servicio detenido");
+                                  //   }       
+                                  // ),
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        const SizedBox(height: 20,),
+                                        CustomTextButton(
+                                          color: Colors.transparent,
+                                          text: isFollow ? "Dejar de seguir" : "Seguir",
+                                          icon: isFollow ? Icons.visibility_off : Icons.visibility,
+                                          textColor: AppColors.colorOne, 
+                                          onPressed: () {
+                                            setState(() {
+                                              isFollow = !isFollow;
+                                            });
+                                            isFollow ? startBackgroundTask(itemProcedure, indexItem) : finishBackgroundTask();
+                                          }
+                                        )
+                                      ],
+                                    ),
+                                  )
                                 ],
                               ); 
                             }
