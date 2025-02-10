@@ -37,9 +37,7 @@ void onStart(ServiceInstance service) async {
         name: "TraceOR",
         options: DefaultFirebaseOptions.currentPlatform,
       );
-      print("Se inicializa Firebase");
     } catch (e) {
-      print("No iniciar Firebase $e");
       return;
     }
   }
