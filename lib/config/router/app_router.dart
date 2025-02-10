@@ -32,7 +32,13 @@ final appRouter = GoRouter(
         ),
         GoRoute(
           path: 'viewProcedure',
-          builder: (context, state) => const ViewProcedure()
+          builder: (context, state) => const ViewProcedure(),
+          routes: [
+            GoRoute(
+              path: 'viewComments',
+              builder: (context, state) => const ViewComments()
+            )
+          ]
         )
       ]
     ),

@@ -21,6 +21,9 @@ class AuthRepository {
       password: password,
     );
 
+    await userCredential.user?.updateDisplayName(fullName);
+    await userCredential.user?.reload();
+
     User? firebaseUser = userCredential.user;
 
     if (firebaseUser != null) {

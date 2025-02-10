@@ -16,6 +16,7 @@ import 'package:trace_or/presentation/blocs/auth/auth_state.dart';
 import 'package:trace_or/presentation/blocs/patientProcedure/patient_procedure_bloc.dart';
 import 'package:trace_or/widgets/custom_elevated_button.dart';
 import 'package:trace_or/widgets/custom_text_button.dart';
+import 'package:trace_or/widgets/expandable_comment.dart';
 
 class ViewProcedure extends StatefulWidget {
   const ViewProcedure({super.key});
@@ -93,14 +94,12 @@ class _ViewProcedureState extends State<ViewProcedure> {
     bool isRunning = await service.isRunning();
     if (!isRunning) {
       service.startService();
-      print("Servicio iniciado");
     }
   }
 
   void finishBackgroundTask () async {
     final service = FlutterBackgroundService();
     service.invoke("stopService");
-    print("Servicio detenido");
   }
 
   @override
@@ -245,32 +244,22 @@ class _ViewProcedureState extends State<ViewProcedure> {
                                       )
                                     )
                                   ),
-                                  CustomElevatedButton(
-                                    text: indexItem == listProcedure.length - 1 ? "Finalizar" : "Validar",
-                                    color: AppColors.colorSix,
-                                    onPressed: nextStep        
+                                  Container(
+                                    margin: EdgeInsets.only(bottom: (heightApp * 0.03)),
+                                    child: CustomElevatedButton(
+                                      text: indexItem == listProcedure.length - 1 ? "Finalizar" : "Validar",
+                                      color: AppColors.colorSix,
+                                      onPressed: nextStep        
+                                    )
                                   ),
-                                  // CustomElevatedButton(
-                                  //   text: "Iniciar",
-                                  //   color: AppColors.colorSix,
-                                  //   onPressed: () async {
-                                  //     final service = FlutterBackgroundService();
-                                  //     bool isRunning = await service.isRunning();
-                                  //     if (!isRunning) {
-                                  //       service.startService();
-                                  //       print("Servicio iniciado");
-                                  //     }
-                                  //   }       
-                                  // ),
-                                  // CustomElevatedButton(
-                                  //   text: "Finalizar",
-                                  //   color: AppColors.colorSix,
-                                  //   onPressed: () async {
-                                  //     final service = FlutterBackgroundService();
-                                  //     service.invoke("stopService");
-                                  //     print("Servicio detenido");
-                                  //   }       
-                                  // ),
+                                  ExpandableComment(
+                                    comment: itemProcedure['comments'].isEmpty 
+                                      ? "No hay comentarios por el momento" 
+                                      : itemProcedure['comments'].last,
+                                    onNavigate: (){
+                                      appRouter.push('/home/viewProcedure/viewComments');
+                                    },
+                                  ),
                                   Expanded(
                                     child: Column(
                                       mainAxisAlignment: MainAxisAlignment.end,
